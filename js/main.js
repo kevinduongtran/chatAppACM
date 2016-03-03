@@ -1,4 +1,5 @@
 var currentUser;
+var gifChat = false; // set this to true to disable gif chat in favor of regular messaging
 var ref = new Firebase("https://< CHANGE TO YOUR OWN FIREBASE URL>.firebaseio.com/");
 
 // initial page load
@@ -88,26 +89,31 @@ ref.on('child_added', function(snapshot) {
 
 // Update front end with new message
 function displayChatMessage(name, text) {
-    jQuery.ajax({
-        type: 'GET',
-        url: "https://api.giphy.com/v1/gifs/search?q=" + text + "&rating=r&api_key=dc6zaTOxFJmzC",
-        contentType: "application/json",
-        dataType: 'json',
-        success: function(json) {
-            console.log(json)
-            if (json.data[0]) {
-                var image = json.data[0].images.fixed_height.url;
-                $('#messageOutput').append("<li>" + name + ":<br><img title=" + text + " src=" + image + "></img></li>")
-            } else {
-                $('#messageOutput').append("<li>" + name + ": " + text + " (could not find gif)<li>");
-            }
+    
+    if (gifChat) {
+        jQuery.ajax({
+            type: 'GET',
+            url: "https://api.giphy.com/v1/gifs/search?q=" + text + "&rating=r&api_key=dc6zaTOxFJmzC",
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(json) {
+                console.log(json)
+                if (json.data[0]) {
+                    var image = json.data[0].images.fixed_height.url;
+                    $('#messageOutput').append("<li>" + name + ":<br><img title=" + text + " src=" + image + "></img></li>")
+                } else {
+                    $('#messageOutput').append("<li>" + name + ": " + text + " (could not find gif)<li>");
+                }
 
-            scrolltoBottom();
-        },
-        error: function(e) {}
-    });
-    // $('#messageOutput').append("<li>" + name + ": " + text + "</li>");
-    // scrolltoBottom();
+                scrolltoBottom();
+            },
+            error: function(e) {}
+        });
+    } else {
+        $('#messageOutput').append("<li>" + name + ": " + text + "</li>");
+        scrolltoBottom();
+
+    }
 
 
 };
