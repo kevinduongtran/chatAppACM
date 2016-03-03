@@ -1,5 +1,5 @@
 var currentUser;
-var ref = new Firebase("https://acmchatapp.firebaseio.com/");
+var ref = new Firebase("https://< CHANGE TO YOUR OWN FIREBASE URL>.firebaseio.com/");
 
 // initial page load
 $(document).ready(function() {
