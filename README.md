@@ -4,7 +4,7 @@
 A chat app built for our first acm workshop built by Kevin Duong-Tran to introduce Web Development to UNLV ACM. Front-end built using Jquery and Cookie.js with Firebase as a backend.
 
 
-## Setup
+## Setup with your own Logins and Firebase Database
 
 1. Register on Firebase and create a new app. Take first subdomain of Firebase and paste it to line 2 of main.js
 
